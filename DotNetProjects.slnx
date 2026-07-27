@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/01-SolidPrinciples/">
+    <File Path="README.md" />
     <Project Path="01-SolidPrinciples/AfterDIP/AfterDIP.csproj" />
     <Project Path="01-SolidPrinciples/AfterISP/AfterISP.csproj" />
     <Project Path="01-SolidPrinciples/AfterLSP/AfterLSP.csproj" />
