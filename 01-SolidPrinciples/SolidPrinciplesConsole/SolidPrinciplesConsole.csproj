@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AfterDIP\AfterDIP.csproj" />
+    <ProjectReference Include="..\AfterISP\AfterISP.csproj" />
+    <ProjectReference Include="..\AfterLSP\AfterLSP.csproj" />
+    <ProjectReference Include="..\AfterOCP\AfterOCP.csproj" />
+    <ProjectReference Include="..\BeforeDIP\BeforeDIP.csproj" />
+    <ProjectReference Include="..\BeforeISP\BeforeISP.csproj" />
+    <ProjectReference Include="..\BeforeLSP\BeforeLSP.csproj" />
+    <ProjectReference Include="..\BeforeOCP\BeforeOCP.csproj" />
+    <ProjectReference Include="..\BeforeSRP\BeforeSRP.csproj" />
+    <ProjectReference Include="..\ClassLibrary1\AfterSRP.csproj" />
+  </ItemGroup>
+
+</Project>

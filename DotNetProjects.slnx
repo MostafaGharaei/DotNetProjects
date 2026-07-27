@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/01-SolidPrinciples/">
+    <Project Path="01-SolidPrinciples/AfterDIP/AfterDIP.csproj" />
+    <Project Path="01-SolidPrinciples/AfterISP/AfterISP.csproj" />
+    <Project Path="01-SolidPrinciples/AfterLSP/AfterLSP.csproj" />
+    <Project Path="01-SolidPrinciples/AfterOCP/AfterOCP.csproj" />
+    <Project Path="01-SolidPrinciples/BeforeDIP/BeforeDIP.csproj" />
+    <Project Path="01-SolidPrinciples/BeforeISP/BeforeISP.csproj" />
+    <Project Path="01-SolidPrinciples/BeforeLSP/BeforeLSP.csproj" />
+    <Project Path="01-SolidPrinciples/BeforeOCP/BeforeOCP.csproj" />
+    <Project Path="01-SolidPrinciples/BeforeSRP/BeforeSRP.csproj" />
+    <Project Path="01-SolidPrinciples/ClassLibrary1/AfterSRP.csproj" />
+    <Project Path="01-SolidPrinciples/SolidPrinciplesConsole/SolidPrinciplesConsole.csproj" />
+  </Folder>
+</Solution>
