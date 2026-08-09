@@ -1,267 +1,87 @@
-﻿using SingletonDemo;
-using FactoryDemo;
-using StrategyDemo;
-using RepositoryDemo;
-using UnitOfWorkDemo;
+﻿using DecoratorDemo;
+using MediatorDemo;
+using ObserverDemo;
+using AdapterDemo;
+using CqrsDemo;
 using System.Text;
 
 Console.OutputEncoding = Encoding.UTF8;
 
 Console.WriteLine("""
 ╔══════════════════════════════════════════════════════════════╗
-║                     DESIGN PATTERNS DEMO           
+║                     DESIGN PATTERNS DEMO                      ║
 ╚══════════════════════════════════════════════════════════════╝
 """);
 
-// Singleton Demo
-Console.WriteLine("\n📌 1. SINGLETON PATTERN");
+// 1. Decorator
+Console.WriteLine("\n📌 1. DECORATOR PATTERN");
 Console.WriteLine(new string('─', 50));
-DemoSingleton();
+DemoDecorator();
 
-Console.WriteLine("\n📌 2. FACTORY PATTERN");
+// 2. Mediator
+Console.WriteLine("\n📌 2. MEDIATOR PATTERN");
 Console.WriteLine(new string('─', 50));
-DemoFactory();
+DemoMediator();
 
-Console.WriteLine("\n📌 3. STRATEGY PATTERN");
+// 3. Observer
+Console.WriteLine("\n📌 3. OBSERVER PATTERN");
 Console.WriteLine(new string('─', 50));
-DemoStrategy();
+DemoObserver();
 
-Console.WriteLine("\n📌 4. REPOSITORY PATTERN");
+// 4. Adapter
+Console.WriteLine("\n📌 4. ADAPTER PATTERN");
 Console.WriteLine(new string('─', 50));
-DemoRepository();
+DemoAdapter();
 
-Console.WriteLine("\n📌 5. UNIT OF WORK PATTERN");
+// 5. CQRS
+Console.WriteLine("\n📌 5. CQRS (COMMAND QUERY RESPONSIBILITY SEGREGATION)");
 Console.WriteLine(new string('─', 50));
-DemoUnitOfWork();
+DemoCqrs();
 
 Console.WriteLine("\n" + new string('═', 60));
-Console.WriteLine("✅ All Design Patterns demonstrated successfully!");
+Console.WriteLine("✅ Requested design patterns listed (Decorator, Mediator, Observer, Adapter, CQRS)");
 Console.WriteLine("Press any key to exit...");
 Console.ReadKey();
 
-// ===== Demo Methods =====
+//
+// Demo methods: each method contains short English comments describing the intended demonstration
+// Implementations live in their respective namespaces/projects (e.g. DecoratorDemo) — Copilot Web can add them.
+// These demo methods call into those implementations; update or implement the namespaces to make the project compile.
+//
 
-static void DemoSingleton()
+static void DemoDecorator()
 {
-    Console.WriteLine("Testing Singleton Pattern...\n");
-
-    var logger1 = Logger.Instance;
-    logger1.LogInfo("Application started");
-    logger1.LogWarning("This is a warning message");
-    logger1.LogError("This is an error message");
-    logger1.LogDebug("Debugging information");
-
-    var logger2 = Logger.Instance;
-    logger2.LogInfo("Additional log message");
-
-    Console.WriteLine($"\n📊 Singleton Info:");
-    Console.WriteLine($"   Same instance? {ReferenceEquals(logger1, logger2)}");
-    Console.WriteLine($"   Instance hash: {logger1.GetHashCode():X}");
-    Console.WriteLine($"   Log file path: {logger1.LogFilePath}");
-    Console.WriteLine("\n✅ Singleton pattern ensures only one instance exists!");
+    // English: Demonstrate how responsibilities can be added to objects dynamically using decorators.
+    // Expected: A component interface, concrete component, and one or more decorators that wrap the component.
+    // The demo should show base behavior, then decorated behavior with added responsibilities.
+    Console.WriteLine("Decorator demo placeholder — implement DecoratorDemo with IComponent, ConcreteComponent, and Decorators.");
 }
 
-static void DemoFactory()
+static void DemoMediator()
 {
-    Console.WriteLine("Testing Factory Pattern...\n");
-
-    var types = new[] { "email", "sms", "push", "slack" };
-
-    foreach (var type in types)
-    {
-        try
-        {
-            Console.WriteLine($"Creating {type} notification...");
-            var notification = NotificationFactory.Create(type);
-            notification.Send("user@example.com", $"Hello from {type}!");
-
-            if (NotificationFactory.TryCreate(type, out var notif))
-            {
-                Console.WriteLine($"   ✅ Created: {notif!.TypeName}");
-            }
-            Console.WriteLine();
-        }
-        catch (ArgumentException ex)
-        {
-            Console.WriteLine($"   ❌ {ex.Message}");
-            Console.WriteLine();
-        }
-    }
-
-    Console.WriteLine("✅ Factory pattern creates appropriate objects based on type!");
+    // English: Demonstrate the Mediator pattern to centralize complex communication between objects.
+    // Expected: A Mediator interface, ConcreteMediator and colleague objects that interact via the mediator.
+    // Show how colleagues avoid direct references to each other and use the mediator for coordination.
+    Console.WriteLine("Mediator demo placeholder — implement MediatorDemo with IMediator and colleague classes.");
 }
 
-static void DemoStrategy()
+static void DemoObserver()
 {
-    Console.WriteLine("Testing Strategy Pattern...\n");
-
-    var cart = new ShoppingCart();
-
-    cart.AddItem("Laptop", 1299.99m);
-    cart.AddItem("Wireless Mouse", 29.99m, 2);
-    cart.AddItem("Mechanical Keyboard", 89.99m);
-    cart.DisplayCart();
-
-    var total = cart.CalculateTotal();
-    Console.WriteLine($"\n💰 Cart Total: ${total:F2}\n");
-
-    var paymentMethods = new IPaymentStrategy[]
-    {
-        new CreditCardPayment("1234-5678-9012-3456", "John Doe"),
-        new PayPalPayment("john.doe@paypal.com"),
-        new BitcoinPayment("1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"),
-        new CashPayment()
-    };
-
-    foreach (var method in paymentMethods)
-    {
-        Console.WriteLine($"💳 Testing {method.Name}...");
-        cart.SetPaymentStrategy(method);
-        cart.Checkout();
-        Console.WriteLine();
-    }
-
-    Console.WriteLine("✅ Strategy pattern allows switching payment methods easily!");
+    // English: Demonstrate the Observer pattern where observers subscribe to a subject and react to state changes.
+    // Expected: IObserver and ISubject (or event-based) implementations; show multiple observers receiving updates.
+    Console.WriteLine("Observer demo placeholder — implement ObserverDemo with Subject and multiple Observers.");
 }
 
-static void DemoRepository()
+static void DemoAdapter()
 {
-    Console.WriteLine("Testing Repository Pattern...\n");
-
-    var repository = new CustomerRepository();
-
-    Console.WriteLine($"📊 Total customers: {repository.Count}\n");
-
-    Console.WriteLine("📋 All customers:");
-    foreach (var customer in repository.GetAll())
-    {
-        Console.WriteLine($"   {customer}");
-    }
-
-    Console.WriteLine("\n🟢 Active customers:");
-    foreach (var customer in repository.GetActiveCustomers())
-    {
-        Console.WriteLine($"   {customer}");
-    }
-
-    Console.WriteLine("\n🔍 Searching for 'John':");
-    foreach (var customer in repository.SearchCustomers("John"))
-    {
-        Console.WriteLine($"   {customer}");
-    }
-
-    Console.WriteLine("\n📅 Recent customers (last 30 days):");
-    foreach (var customer in repository.GetRecentCustomers(30))
-    {
-        Console.WriteLine($"   {customer}");
-    }
-
-    var newCustomer = new Customer
-    {
-        FirstName = "Sarah",
-        LastName = "Wilson",
-        Email = "sarah.wilson@email.com",
-        Phone = "555-999-8888"
-    };
-    repository.Add(newCustomer);
-
-    Console.WriteLine($"\n📊 Total customers after add: {repository.Count}");
-    Console.WriteLine("\n✅ Repository pattern abstracts data access logic!");
+    // English: Demonstrate Adapter pattern to allow incompatible interfaces to work together.
+    // Expected: An existing (legacy) interface, a target interface, and an Adapter that translates calls.
+    Console.WriteLine("Adapter demo placeholder — implement AdapterDemo demonstrating wrapping an incompatible API.");
 }
 
-static void DemoUnitOfWork()
+static void DemoCqrs()
 {
-    Console.WriteLine("Testing Unit of Work Pattern...\n");
-
-    using var uow = new UnitOfWork();
-
-    Console.WriteLine("📦 Available products:");
-    foreach (var product in uow.Products.GetAll())
-    {
-        Console.WriteLine($"   {product}");
-    }
-
-    Console.WriteLine("\n📦 Products in stock:");
-    foreach (var product in uow.Products.GetProductsInStock())
-    {
-        Console.WriteLine($"   {product}");
-    }
-
-    // Create a new order
-    var order = new Order
-    {
-        CustomerId = 1,
-        Status = "Pending",
-        PaymentMethod = "Credit Card",
-        ShippingAddress = "123 Main St, City, Country",
-        Items =
-        [
-            new OrderItem
-            {
-                ProductId = 1,
-                ProductName = "MacBook Pro 16",
-                Quantity = 1,
-                UnitPrice = 2499.99m
-            },
-            new OrderItem
-            {
-                ProductId = 3,
-                ProductName = "Logitech MX Master 3S",
-                Quantity = 2,
-                UnitPrice = 99.99m
-            },
-            new OrderItem
-            {
-                ProductId = 6,
-                ProductName = "USB-C 7-in-1 Hub",
-                Quantity = 1,
-                UnitPrice = 49.99m
-            }
-        ]
-    };
-
-    var total = order.Items.Sum(item => item.TotalPrice);
-    order = order with { TotalAmount = total };
-
-    Console.WriteLine($"\n📋 Creating order:");
-    Console.WriteLine($"   Total: ${total:F2}");
-    Console.WriteLine($"   Items: {order.Items.Count}");
-
-    uow.Orders.Add(order);
-    uow.TrackChange(order);
-
-    foreach (var item in order.Items)
-    {
-        var product = uow.Products.GetById(item.ProductId);
-        if (product is not null)
-        {
-            var newStock = product.StockQuantity - item.Quantity;
-            uow.Products.UpdateStock(item.ProductId, newStock);
-            uow.TrackChange(product);
-            Console.WriteLine($"   📦 Updated stock for '{product.Name}': {product.StockQuantity} → {newStock}");
-        }
-    }
-
-    Console.WriteLine("\n💾 Committing transaction...");
-    uow.Complete();
-
-    Console.WriteLine("\n📦 Updated products:");
-    foreach (var product in uow.Products.GetAll())
-    {
-        Console.WriteLine($"   {product}");
-    }
-
-    Console.WriteLine("\n📋 All orders:");
-    foreach (var ord in uow.Orders.GetAll())
-    {
-        Console.WriteLine($"   {ord}");
-    }
-
-    Console.WriteLine("\n📋 Orders by status 'Pending':");
-    foreach (var ord in uow.Orders.GetOrdersByStatus("Pending"))
-    {
-        Console.WriteLine($"   {ord}");
-    }
-
-    Console.WriteLine("\n✅ Unit of Work pattern manages transactions and ensures consistency!");
+    // English: Demonstrate CQRS: separate command (write) and query (read) models.
+    // Expected: simple in-memory command handler(s) and query handler(s); show updating state via commands and reading via queries.
+    Console.WriteLine("CQRS demo placeholder — implement CqrsDemo with CommandHandlers and QueryHandlers (in-memory OK).");
 }
