@@ -22,7 +22,4 @@
     <Project Path="02-DesignPatterns/StrategyDemo/StrategyDemo.csproj" Id="67334858-7d17-4391-ae4c-268327d8e5d2" />
     <Project Path="02-DesignPatterns/UnitOfWorkDemo/UnitOfWorkDemo.csproj" Id="5e3f0c19-8292-44d2-9dd6-c8a4f528bb38" />
   </Folder>
-  <Folder Name="/Solution Items/">
-    <File Path="ProjectContext.md" />
-  </Folder>
 </Solution>
