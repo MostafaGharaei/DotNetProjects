@@ -1,7 +1,10 @@
 ﻿# 🎯 Design Patterns Learning Project
 
 ## 📋 Project Overview
-This project demonstrates a set of important Design Patterns with practical examples. Each pattern implementation should target **.NET 10** and modern C#.
+This project demonstrates **10 essential design patterns** with practical, runnable examples.  
+Each pattern is implemented as a separate **.NET 10 Class Library**, and a central console application (`DesignPatternsConsole`) showcases all of them.
+
+All code uses modern C# features (records, primary constructors, collection expressions, top‑level statements) and follows the latest .NET best practices.
 
 ---
 
@@ -22,43 +25,19 @@ This project demonstrates a set of important Design Patterns with practical exam
 
 ## 🎯 Design Patterns Covered
 
-The repository is intended to include demonstrations for these patterns (requested):
-- Decorator (Structural/Behavioral)
-- Mediator (Behavioral)
-- Observer (Behavioral)
-- Adapter (Structural)
-- CQRS (Architectural pattern: Command/Query segregation)
-
-Each pattern should include:
-- Small runnable example project or namespace (e.g. `DecoratorDemo`, `MediatorDemo`, etc.)
-- Short English comments in code explaining intent and key lines
-- Unit tests where appropriate
+| #  | Pattern          | Category       | Description |
+|----|------------------|----------------|-------------|
+| 1  | **Singleton**    | Creational     | Ensures only one instance of a class exists |
+| 2  | **Factory**      | Creational     | Creates objects without specifying concrete classes |
+| 3  | **Strategy**     | Behavioral     | Defines interchangeable algorithms |
+| 4  | **Repository**   | Structural     | Abstracts data access logic |
+| 5  | **Unit of Work** | Structural     | Manages transactions and ensures data consistency |
+| 6  | **Decorator**    | Structural     | Dynamically adds responsibilities to objects |
+| 7  | **Mediator**     | Behavioral     | Centralises communication between objects |
+| 8  | **Observer**     | Behavioral     | Notifies dependent objects of state changes |
+| 9  | **Adapter**      | Structural     | Bridges incompatible interfaces |
+| 10 | **CQRS**         | Architectural  | Separates read (Query) and write (Command) models |
 
 ---
 
 ## 🏗️ Project Structure
-- `02-DesignPatterns/DesignPatternsConsole` — console runner that calls each demo
-- `02-DesignPatterns/DecoratorDemo` — (implement) Decorator example
-- `02-DesignPatterns/MediatorDemo` — (implement) Mediator example
-- `02-DesignPatterns/ObserverDemo` — (implement) Observer example
-- `02-DesignPatterns/AdapterDemo` — (implement) Adapter example
-- `02-DesignPatterns/CqrsDemo` — (implement) CQRS example
-
-## 🛠️ Getting Started
-- In Visual Studio: set `DesignPatternsConsole` as startup project using __Solution Explorer__ → right-click project → __Set as Startup Project__.
-- From command line:
-  - Build: `dotnet build`
-  - Run console runner: `dotnet run --project 02-DesignPatterns/DesignPatternsConsole`
-
-## 📡 Make this repository available to Copilot Web
-1. Commit and push your changes to the remote (GitHub).
-2. Open the repository in the browser (GitHub).
-3. In Copilot Web (or Codespaces) open the repository — Copilot will index repository files (including this README and `Program.cs`) and can be asked to implement the demo namespaces.
-4. Alternatively, you can paste the repository URL into any Copilot Web upload/context field if the product supports it.
-
----
-
-## 📝 Notes for implementers
-- Use English comments in code to explain purpose of classes and key methods.
-- Keep demos small and self-contained (in-memory data is fine).
-- Target .NET 10 in project files.

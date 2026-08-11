@@ -15,14 +15,16 @@
   </Folder>
   <Folder Name="/02-DesignPatterns/">
     <File Path="DesignPatternsReadMe.md" />
+    <Project Path="02-DesignPatterns/AdapterDemo/AdapterDemo.csproj" Id="1a6f2af6-d164-4976-9bd6-9217914e14fd" />
+    <Project Path="02-DesignPatterns/CqrsDemo/CqrsDemo.csproj" Id="1eaae791-c4dd-4e99-81cf-8059c2b74b9b" />
+    <Project Path="02-DesignPatterns/DecoratorDemo/DecoratorDemo.csproj" Id="b8110023-f09d-4894-bd18-32fc27529d90" />
     <Project Path="02-DesignPatterns/DesignPatternsConsole/DesignPatternsConsole.csproj" Id="fb862e16-fb62-452d-b9b9-41f57177102c" />
     <Project Path="02-DesignPatterns/FactoryDemo/FactoryDemo.csproj" Id="214480cc-06f9-4b85-93a3-93025278f7f6" />
+    <Project Path="02-DesignPatterns/MediatorDemo/MediatorDemo.csproj" Id="bf799f3b-4c29-4bd0-9a3f-b80375bf63d8" />
+    <Project Path="02-DesignPatterns/ObserverDemo/ObserverDemo.csproj" Id="e25ec2f1-ef79-4bc9-a6dc-14c88d084560" />
     <Project Path="02-DesignPatterns/RepositoryDemo/RepositoryDemo.csproj" Id="5edf4615-9b9b-44a0-bc90-34e80e2d349b" />
     <Project Path="02-DesignPatterns/SingletonDemo/SingletonDemo.csproj" Id="83fe1886-446d-4653-98ba-9c185d0ae74b" />
     <Project Path="02-DesignPatterns/StrategyDemo/StrategyDemo.csproj" Id="67334858-7d17-4391-ae4c-268327d8e5d2" />
     <Project Path="02-DesignPatterns/UnitOfWorkDemo/UnitOfWorkDemo.csproj" Id="5e3f0c19-8292-44d2-9dd6-c8a4f528bb38" />
-  </Folder>
-  <Folder Name="/Solution Items/">
-    <File Path="ProjectContext.md" />
   </Folder>
 </Solution>

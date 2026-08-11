@@ -1,87 +1,263 @@
-﻿using DecoratorDemo;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using DecoratorDemo;
 using MediatorDemo;
 using ObserverDemo;
 using AdapterDemo;
 using CqrsDemo;
-using System.Text;
+using SingletonDemo;
+using FactoryDemo;
+using StrategyDemo;
+using RepositoryDemo;
+using UnitOfWorkDemo;
+using Microsoft.Extensions.DependencyInjection;
 
 Console.OutputEncoding = Encoding.UTF8;
 
 Console.WriteLine("""
 ╔══════════════════════════════════════════════════════════════╗
 ║                     DESIGN PATTERNS DEMO                      ║
+║              (Singleton, Factory, Strategy, Repository,       ║
+║               UnitOfWork, Decorator, Mediator, Observer,      ║
+║               Adapter, CQRS)                                 ║
 ╚══════════════════════════════════════════════════════════════╝
 """);
 
-// 1. Decorator
-Console.WriteLine("\n📌 1. DECORATOR PATTERN");
+// Setup DI for Mediator (if needed)
+var services = new ServiceCollection();
+services.AddSingleton<IMediator, MediatorDemo.Mediator>();
+services.AddTransient<IRequestHandler<SendNotificationCommand, bool>, SendNotificationHandler>();
+var serviceProvider = services.BuildServiceProvider();
+
+// 1. Singleton
+Console.WriteLine("\n📌 1. SINGLETON PATTERN");
+Console.WriteLine(new string('─', 50));
+DemoSingleton();
+
+// 2. Factory
+Console.WriteLine("\n📌 2. FACTORY PATTERN");
+Console.WriteLine(new string('─', 50));
+DemoFactory();
+
+// 3. Strategy
+Console.WriteLine("\n📌 3. STRATEGY PATTERN");
+Console.WriteLine(new string('─', 50));
+DemoStrategy();
+
+// 4. Repository
+Console.WriteLine("\n📌 4. REPOSITORY PATTERN");
+Console.WriteLine(new string('─', 50));
+DemoRepository();
+
+// 5. Unit of Work
+Console.WriteLine("\n📌 5. UNIT OF WORK PATTERN");
+Console.WriteLine(new string('─', 50));
+await DemoUnitOfWork();
+
+// 6. Decorator
+Console.WriteLine("\n📌 6. DECORATOR PATTERN");
 Console.WriteLine(new string('─', 50));
 DemoDecorator();
 
-// 2. Mediator
-Console.WriteLine("\n📌 2. MEDIATOR PATTERN");
+// 7. Mediator
+Console.WriteLine("\n📌 7. MEDIATOR PATTERN");
 Console.WriteLine(new string('─', 50));
-DemoMediator();
+await DemoMediator(serviceProvider);
 
-// 3. Observer
-Console.WriteLine("\n📌 3. OBSERVER PATTERN");
+// 8. Observer
+Console.WriteLine("\n📌 8. OBSERVER PATTERN");
 Console.WriteLine(new string('─', 50));
 DemoObserver();
 
-// 4. Adapter
-Console.WriteLine("\n📌 4. ADAPTER PATTERN");
+// 9. Adapter
+Console.WriteLine("\n📌 9. ADAPTER PATTERN");
 Console.WriteLine(new string('─', 50));
-DemoAdapter();
+await DemoAdapter();
 
-// 5. CQRS
-Console.WriteLine("\n📌 5. CQRS (COMMAND QUERY RESPONSIBILITY SEGREGATION)");
+// 10. CQRS
+Console.WriteLine("\n📌 10. CQRS (COMMAND QUERY RESPONSIBILITY SEGREGATION)");
 Console.WriteLine(new string('─', 50));
-DemoCqrs();
+await DemoCqrs();
 
 Console.WriteLine("\n" + new string('═', 60));
-Console.WriteLine("✅ Requested design patterns listed (Decorator, Mediator, Observer, Adapter, CQRS)");
+Console.WriteLine("✅ All 10 design patterns demonstrated successfully!");
 Console.WriteLine("Press any key to exit...");
 Console.ReadKey();
 
-//
-// Demo methods: each method contains short English comments describing the intended demonstration
-// Implementations live in their respective namespaces/projects (e.g. DecoratorDemo) — Copilot Web can add them.
-// These demo methods call into those implementations; update or implement the namespaces to make the project compile.
-//
+// ============================================================
+// Demo Methods - each one calls the real implementation from the respective project
+// ============================================================
+
+static void DemoSingleton()
+{
+    var logger1 = Logger.Instance;
+    logger1.LogInfo("Singleton demo started");
+    logger1.LogWarning("This is a warning");
+    logger1.LogError("This is an error");
+
+    var logger2 = Logger.Instance;
+    Console.WriteLine($"\n✅ Same instance? {ReferenceEquals(logger1, logger2)}");
+}
+
+static void DemoFactory()
+{
+    var email = NotificationFactory.Create("email");
+    email.Send("user@test.com", "Hello via Email!");
+
+    var sms = NotificationFactory.Create("sms");
+    sms.Send("+123456789", "Hello via SMS!");
+
+    var push = NotificationFactory.Create("push");
+    push.Send("device123", "Hello via Push!");
+}
+
+static void DemoStrategy()
+{
+    var cart = new ShoppingCart();
+    cart.AddItem("Laptop", 1299.99m);
+    cart.AddItem("Mouse", 29.99m, 2);
+
+    cart.SetPaymentStrategy(new CreditCardPayment("1234-5678-9012-3456", "John Doe"));
+    cart.Checkout();
+
+    cart.SetPaymentStrategy(new PayPalPayment("john@paypal.com"));
+    cart.Checkout();
+
+    cart.SetPaymentStrategy(new BitcoinPayment("1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"));
+    cart.Checkout();
+}
+
+static void DemoRepository()
+{
+    var repo = new CustomerRepository();
+
+    Console.WriteLine("All customers:");
+    foreach (var c in repo.GetAll())
+        Console.WriteLine($"  {c}");
+
+    Console.WriteLine("\nActive customers:");
+    foreach (var c in repo.GetActiveCustomers())
+        Console.WriteLine($"  {c}");
+
+    Console.WriteLine("\nSearch for 'John':");
+    foreach (var c in repo.SearchCustomers("John"))
+        Console.WriteLine($"  {c}");
+
+    var newC = new Customer
+    {
+        FirstName = "Sarah",
+        LastName = "Wilson",
+        Email = "sarah@email.com",
+        Phone = "555-999-8888"
+    };
+    repo.Add(newC);
+    Console.WriteLine($"\nTotal customers after add: {repo.Count}");
+}
+
+static async Task DemoUnitOfWork()
+{
+    using var uow = new UnitOfWork();
+
+    Console.WriteLine("Products before order:");
+    foreach (var p in uow.Products.GetAll())
+        Console.WriteLine($"  {p}");
+
+    var order = new Order
+    {
+        CustomerId = 1,
+        Status = "Pending",
+        Items = new List<OrderItem>
+        {
+            new OrderItem { ProductId = 1, ProductName = "Laptop", Quantity = 1, UnitPrice = 1299.99m },
+            new OrderItem { ProductId = 2, ProductName = "Mouse", Quantity = 2, UnitPrice = 29.99m }
+        }
+    };
+
+    var total = order.Items.Sum(i => i.TotalPrice);
+    order = order with { TotalAmount = total };
+
+    uow.Orders.Add(order);
+    uow.TrackChange(order);
+
+    foreach (var item in order.Items)
+    {
+        var product = uow.Products.GetById(item.ProductId);
+        if (product is not null)
+        {
+            var newStock = product.StockQuantity - item.Quantity;
+            uow.Products.UpdateStock(item.ProductId, newStock);
+            uow.TrackChange(product);
+        }
+    }
+
+    uow.Complete();
+
+    Console.WriteLine("\nProducts after order:");
+    foreach (var p in uow.Products.GetAll())
+        Console.WriteLine($"  {p}");
+
+    Console.WriteLine("\nAll orders:");
+    foreach (var o in uow.Orders.GetAll())
+        Console.WriteLine($"  {o}");
+}
 
 static void DemoDecorator()
 {
-    // English: Demonstrate how responsibilities can be added to objects dynamically using decorators.
-    // Expected: A component interface, concrete component, and one or more decorators that wrap the component.
-    // The demo should show base behavior, then decorated behavior with added responsibilities.
-    Console.WriteLine("Decorator demo placeholder — implement DecoratorDemo with IComponent, ConcreteComponent, and Decorators.");
+    INotificationService email = new EmailNotificationService();
+    INotificationService logged = new LoggingNotificationDecorator(email);
+    INotificationService resilient = new RetryNotificationDecorator(logged, 3);
+
+    resilient.Send("user@example.com", "Hello from Decorator!");
 }
 
-static void DemoMediator()
+static async Task DemoMediator(IServiceProvider sp)
 {
-    // English: Demonstrate the Mediator pattern to centralize complex communication between objects.
-    // Expected: A Mediator interface, ConcreteMediator and colleague objects that interact via the mediator.
-    // Show how colleagues avoid direct references to each other and use the mediator for coordination.
-    Console.WriteLine("Mediator demo placeholder — implement MediatorDemo with IMediator and colleague classes.");
+    var mediator = sp.GetRequiredService<IMediator>();
+    var result = await mediator.Send<SendNotificationCommand, bool>(
+        new SendNotificationCommand("user@test.com", "Hello from Mediator!")
+    );
+    Console.WriteLine($"✅ Mediator result: {result}");
 }
 
 static void DemoObserver()
 {
-    // English: Demonstrate the Observer pattern where observers subscribe to a subject and react to state changes.
-    // Expected: IObserver and ISubject (or event-based) implementations; show multiple observers receiving updates.
-    Console.WriteLine("Observer demo placeholder — implement ObserverDemo with Subject and multiple Observers.");
+    var sensor = new TemperatureSensor();
+    var display1 = new TemperatureDisplay("Display 1");
+    var display2 = new TemperatureDisplay("Display 2");
+    var alert = new AlertSystem(30.0);
+
+    sensor.Attach(display1);
+    sensor.Attach(display2);
+    sensor.Attach(alert);
+
+    sensor.SetTemperature(25.0);
+    sensor.SetTemperature(28.5);
+    sensor.SetTemperature(32.0);
 }
 
-static void DemoAdapter()
+static async Task DemoAdapter()
 {
-    // English: Demonstrate Adapter pattern to allow incompatible interfaces to work together.
-    // Expected: An existing (legacy) interface, a target interface, and an Adapter that translates calls.
-    Console.WriteLine("Adapter demo placeholder — implement AdapterDemo demonstrating wrapping an incompatible API.");
+    var stripeApi = new StripeApi();
+    IPaymentProcessor processor = new StripeAdapter(stripeApi);
+
+    var result = await processor.ProcessPaymentAsync(99.99m, "USD", "cust_123");
+    Console.WriteLine($"💳 Payment result: {result}");
 }
 
-static void DemoCqrs()
+static async Task DemoCqrs()
 {
-    // English: Demonstrate CQRS: separate command (write) and query (read) models.
-    // Expected: simple in-memory command handler(s) and query handler(s); show updating state via commands and reading via queries.
-    Console.WriteLine("CQRS demo placeholder — implement CqrsDemo with CommandHandlers and QueryHandlers (in-memory OK).");
+    var command = new CreateOrderCommand("Laptop", 1, 1299.99m);
+    var commandHandler = new CreateOrderCommandHandler();
+    var orderId = await commandHandler.Handle(command);
+
+    var query = new GetOrderQuery(orderId);
+    var queryHandler = new GetOrderQueryHandler();
+    var order = await queryHandler.Handle(query);
+
+    if (order is not null)
+    {
+        Console.WriteLine($"📖 Order found: {order.ProductName} x {order.Quantity} = ${order.TotalAmount}");
+    }
 }
