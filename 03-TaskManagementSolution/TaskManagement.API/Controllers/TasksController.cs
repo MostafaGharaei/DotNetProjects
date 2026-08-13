@@ -50,5 +50,13 @@ namespace TaskManagement.API.Controllers
             var result = await _mediator.Send(new DeleteTaskCommand(id));
             return result ? Ok("Deleted") : NotFound();
         }
+
+        // GET: api/tasks/sorted?type=title
+        [HttpGet("sorted")]
+        public async Task<IActionResult> GetSorted([FromQuery] string type)
+        {
+            var result = await _mediator.Send(new GetSortedTasksQuery(type));
+            return Ok(result);
+        }
     }
 }
