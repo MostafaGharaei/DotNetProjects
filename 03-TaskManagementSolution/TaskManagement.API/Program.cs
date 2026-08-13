@@ -1,7 +1,8 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using TaskManagement.Infrastructure.Repositories;
 using System.Reflection;
+using TaskManagement.Application.Common.Decorators;
+using TaskManagement.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,8 @@ builder.Services.AddMediatR(cfg =>
 
 // Register Repository
 builder.Services.AddSingleton<ITaskRepository, TaskRepository>();
+
+builder.Services.AddTransient(typeof(IRequestHandler<,>), typeof(LoggingDecorator<,>));
 
 builder.Services.AddControllers();
 
