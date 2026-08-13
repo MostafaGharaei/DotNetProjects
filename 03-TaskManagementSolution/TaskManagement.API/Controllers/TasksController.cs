@@ -31,5 +31,24 @@ namespace TaskManagement.API.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
+        // PUT: api/tasks/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateTaskCommand command)
+        {
+            if (id != command.Id)
+                return BadRequest("Id mismatch");
+
+            var result = await _mediator.Send(command);
+            return result == null ? NotFound() : Ok(result);
+        }
+
+        // DELETE: api/tasks/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _mediator.Send(new DeleteTaskCommand(id));
+            return result ? Ok("Deleted") : NotFound();
+        }
     }
 }

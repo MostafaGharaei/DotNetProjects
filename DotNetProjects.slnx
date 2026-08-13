@@ -27,13 +27,14 @@
     <Project Path="02-DesignPatterns/StrategyDemo/StrategyDemo.csproj" Id="67334858-7d17-4391-ae4c-268327d8e5d2" />
     <Project Path="02-DesignPatterns/UnitOfWorkDemo/UnitOfWorkDemo.csproj" Id="5e3f0c19-8292-44d2-9dd6-c8a4f528bb38" />
   </Folder>
-  <Folder Name="/03-TaskManagementSolution/">
+  <Folder Name="/03-TaskManagement/">
+    <File Path="TaskManagementReadMe.md" />
     <Project Path="03-TaskManagementSolution/TaskManagement.API/TaskManagement.API.csproj" Id="f9710632-48d5-432e-9b86-307cb593cc43" />
     <Project Path="03-TaskManagementSolution/TaskManagement.Application/TaskManagement.Application.csproj" Id="ae325f6e-13b1-451a-9b89-7c5bea84e989" />
     <Project Path="03-TaskManagementSolution/TaskManagement.Domain/TaskManagement.Domain.csproj" Id="43e24dd5-0817-4db4-8d3a-7ca0dc3575f5" />
     <Project Path="03-TaskManagementSolution/TaskManagement.Infrastructure/TaskManagement.Infrastructure.csproj" Id="b491b682-637a-4097-a6ea-a9d9fe7c1af3" />
   </Folder>
-  <Folder Name="/03-TaskManagementSolution/docs/">
+  <Folder Name="/03-TaskManagement/docs/">
     <File Path="architecture.md" />
   </Folder>
 </Solution>

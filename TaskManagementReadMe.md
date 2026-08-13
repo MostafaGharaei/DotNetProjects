@@ -1,0 +1,1 @@
+to test project RightClick on the TaskManagement.API project => SET AS DEFAULT PROJECT => Run Application

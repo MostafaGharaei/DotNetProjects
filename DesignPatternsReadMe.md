@@ -41,3 +41,6 @@ All code uses modern C# features (records, primary constructors, collection expr
 ---
 
 ## 🏗️ Project Structure
+
+
+to test project RightClick on the DesignPatternsConsole project => SET AS DEFAULT PROJECT => Run Application
