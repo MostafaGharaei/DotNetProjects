@@ -29,6 +29,7 @@
   </Folder>
   <Folder Name="/03-TaskManagement/">
     <File Path="TaskManagementReadMe.md" />
+    <Project Path="03-taskmanagement/TaskManagement.Tests/TaskManagement.Tests.csproj" Id="2f73a886-334b-402f-b839-488b13fd1772" />
     <Project Path="03-TaskManagementSolution/TaskManagement.API/TaskManagement.API.csproj" Id="f9710632-48d5-432e-9b86-307cb593cc43" />
     <Project Path="03-TaskManagementSolution/TaskManagement.Application/TaskManagement.Application.csproj" Id="ae325f6e-13b1-451a-9b89-7c5bea84e989" />
     <Project Path="03-TaskManagementSolution/TaskManagement.Domain/TaskManagement.Domain.csproj" Id="43e24dd5-0817-4db4-8d3a-7ca0dc3575f5" />
